@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
     const searchResults = document.getElementById('search-results');
     const inventory = document.getElementById('inventory');
-    const calculateButton = document.getElementById('calculate');
     const crafts = document.getElementById('crafts');
 
     let items = [];
@@ -75,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             inventory.appendChild(itemDiv);
         }
+        updateCrafts();
     };
 
     window.changeQuantity = function(itemName, delta) {
@@ -86,14 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             amountInput.value = newValue;
         }
+        updateCrafts();
     };
 
     window.removeFromInventory = function(itemName) {
         const itemDiv = document.getElementById(`inventory-${itemName}`);
         inventory.removeChild(itemDiv);
+        updateCrafts();
     };
 
-    calculateButton.addEventListener('click', () => {
+    function updateCrafts() {
         const inventoryItems = Array.from(inventory.querySelectorAll('.item')).reduce((acc, itemDiv) => {
             const itemName = itemDiv.id.replace('inventory-', '');
             const amount = parseInt(itemDiv.querySelector('.amount').value);
@@ -111,5 +113,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 crafts.appendChild(craftDiv);
             }
         });
-    });
+    }
 });
