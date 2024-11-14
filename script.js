@@ -12,48 +12,31 @@ document.addEventListener('DOMContentLoaded', () => {
     Promise.all([
         fetch('base_building.json').then(response => response.json()),
         fetch('clothing.json').then(response => response.json()),
-        fetch('communication.json').then(response => response.json()),
-        fetch('crafting.json').then(response => response.json()),
-        fetch('fishing.json').then(response => response.json()),
-        fetch('horticulture.json').then(response => response.json()),
-        fetch('light_sources.json').then(response => response.json()),
-        fetch('medical.json').then(response => response.json()),
-        fetch('personal_storage.json').then(response => response.json()),
-        fetch('power_source.json').then(response => response.json()),
-        fetch('protective_gear.json').then(response => response.json()),
-        fetch('repair_kits.json').then(response => response.json()),
-        fetch('survival.json').then(response => response.json()),
-        fetch('tools.json').then(response => response.json()),
-        fetch('vehicle_parts.json').then(response => response.json()),
-        fetch('miscellaneous.json').then(response => response.json())
+        // ... other JSON files
     ]).then(jsonFiles => {
         jsonFiles.forEach(file => {
-            // Assuming each file contains an array of recipes
             recipes = recipes.concat(file.recipes);
             file.recipes.forEach(recipe => {
-                Object.keys(recipe.requires).forEach(material => {
+                Object.keys(recipe.materials).forEach(material => {
                     if (!items.some(item => item.name === material)) {
                         items.push({ name: material, icon: `${material.toLowerCase().replace(/ /g, '_')}.png` });
                     }
                 });
             });
         });
-        initSearch();
     });
 
-    function initSearch() {
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.toLowerCase();
-            searchResults.innerHTML = '';
-            const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
-            filteredItems.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-                itemDiv.innerHTML = `<img src="${item.icon}" alt="${item.name}"><p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
-                searchResults.appendChild(itemDiv);
-            });
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        searchResults.innerHTML = '';
+        const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
+        filteredItems.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item';
+            itemDiv.innerHTML = `<img src="${item.icon}" alt="${item.name}"><p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
+            searchResults.appendChild(itemDiv);
         });
-    }
+    });
 
     window.addToInventory = function(itemName) {
         const item = items.find(i => i.name === itemName);
