@@ -1,19 +1,44 @@
-// Sample data structure for items and recipes
-const items = [
-    { name: 'Wood', icon: 'wood.png' },
-    { name: 'Iron', icon: 'iron.png' }
-];
-
-const recipes = [
-    { result: 'Iron Sword', requires: { Wood: 1, Iron: 2 } }
-];
-
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
     const searchResults = document.getElementById('search-results');
     const inventory = document.getElementById('inventory');
     const calculateButton = document.getElementById('calculate');
     const crafts = document.getElementById('crafts');
+
+    let items = [];
+    let recipes = [];
+
+    // Fetch items and recipes from JSON files
+    Promise.all([
+        fetch('base_building.json').then(response => response.json()),
+        fetch('clothing.json').then(response => response.json()),
+        fetch('communication.json').then(response => response.json()),
+        fetch('crafting.json').then(response => response.json()),
+        fetch('fishing.json').then(response => response.json()),
+        fetch('horticulture.json').then(response => response.json()),
+        fetch('light_sources.json').then(response => response.json()),
+        fetch('medical.json').then(response => response.json()),
+        fetch('personal_storage.json').then(response => response.json()),
+        fetch('power_source.json').then(response => response.json()),
+        fetch('protective_gear.json').then(response => response.json()),
+        fetch('repair_kits.json').then(response => response.json()),
+        fetch('survival.json').then(response => response.json()),
+        fetch('tools.json').then(response => response.json()),
+        fetch('vehicle_parts.json').then(response => response.json()),
+        fetch('miscellaneous.json').then(response => response.json())
+    ]).then(jsonFiles => {
+        jsonFiles.forEach(file => {
+            // Assuming each file contains an array of recipes
+            recipes = recipes.concat(file.recipes);
+            file.recipes.forEach(recipe => {
+                Object.keys(recipe.materials).forEach(material => {
+                    if (!items.some(item => item.name === material)) {
+                        items.push({ name: material, icon: `${material.toLowerCase().replace(/ /g, '_')}.png` });
+                    }
+                });
+            });
+        });
+    });
 
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase();
