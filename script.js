@@ -42,19 +42,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function initSearch() {
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.toLowerCase();
-            searchResults.innerHTML = '';
-            const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
-            filteredItems.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'dropdown-item';
-                itemDiv.innerHTML = `<p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
-                searchResults.appendChild(itemDiv);
-            });
-            searchResults.style.display = filteredItems.length ? 'block' : 'none';
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        searchResults.innerHTML = '';
+        const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
+        filteredItems.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'dropdown-item';
+            itemDiv.innerHTML = `
+                <div class="item-name">${item.name}</div>
+                <div class="item-button">
+                    <button onclick="addToInventory('${item.name}')">+</button>
+                </div>`;
+            searchResults.appendChild(itemDiv);
         });
-    }
+        searchResults.style.display = filteredItems.length ? 'block' : 'none';
+    });
+}
+CreateElement('div');
 
     window.addToInventory = function(itemName) {
         const item = items.find(i => i.name === itemName);
