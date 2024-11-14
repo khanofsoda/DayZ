@@ -9,24 +9,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let items = [];
     let recipes = [];
 
-    // Fetch items and recipes from JSON files
+    function generateVersionSeed() {
+        return Math.random().toString(36).substring(2, 15);
+    }
+
+    const versionSeed = generateVersionSeed();
+
+    // Fetch items and recipes from JSON files with version seed to prevent caching
     Promise.all([
-        fetch('base_building.json').then(response => response.json()),
-        fetch('clothing.json').then(response => response.json()),
-        fetch('communication.json').then(response => response.json()),
-        fetch('crafting.json').then(response => response.json()),
-        fetch('fishing.json').then(response => response.json()),
-        fetch('horticulture.json').then(response => response.json()),
-        fetch('light_sources.json').then(response => response.json()),
-        fetch('medical.json').then(response => response.json()),
-        fetch('personal_storage.json').then(response => response.json()),
-        fetch('power_source.json').then(response => response.json()),
-        fetch('protective_gear.json').then(response => response.json()),
-        fetch('repair_kits.json').then(response => response.json()),
-        fetch('survival.json').then(response => response.json()),
-        fetch('tools.json').then(response => response.json()),
-        fetch('vehicle_parts.json').then(response => response.json()),
-        fetch('miscellaneous.json').then(response => response.json())
+        fetch(`base_building.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`clothing.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`communication.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`crafting.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`fishing.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`horticulture.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`light_sources.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`medical.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`personal_storage.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`power_source.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`protective_gear.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`repair_kits.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`survival.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`tools.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`vehicle_parts.json?v=${versionSeed}`).then(response => response.json()),
+        fetch(`miscellaneous.json?v=${versionSeed}`).then(response => response.json())
     ]).then(jsonFiles => {
         jsonFiles.forEach(file => {
             recipes = recipes.concat(file.recipes);
@@ -86,52 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
             itemDiv.innerHTML = `
                 <img src="${item.icon}" alt="${item.name}">
                 <div>
-                    <button onclick="changeQuantity('${itemName}', -1)">-</button>
-                    <input type="number" class="amount" value="1" readonly>
-                    <button onclick="changeQuantity('${itemName}', 1)">+</button>
-                </div>
-                <button onclick="removeFromInventory('${itemName}')">x</button>
-            `;
+                    <button onclick="changeQuantity('${item.name}', -1)">-</button>
+                </div>`;
             inventory.appendChild(itemDiv);
         }
-        updateCrafts();
     };
 
-    window.changeQuantity = function(itemName, delta) {
-        const itemDiv = document.getElementById(`inventory-${itemName}`);
-        const amountInput = itemDiv.querySelector('.amount');
-        const newValue = parseInt(amountInput.value) + delta;
-        if (newValue <= 0) {
-            removeFromInventory(itemName);
+    window.changeQuantity = function(itemName, change) {
+        const item = document.getElementById(`inventory-${itemName}`);
+        const amountInput = item.querySelector('.amount');
+        const newAmount = parseInt(amountInput.value) + change;
+        if (newAmount <= 0) {
+            item.remove();
         } else {
-            amountInput.value = newValue;
+            amountInput.value = newAmount;
         }
-        updateCrafts();
     };
-
-    window.removeFromInventory = function(itemName) {
-        const itemDiv = document.getElementById(`inventory-${itemName}`);
-        inventory.removeChild(itemDiv);
-        updateCrafts();
-    };
-
-    function updateCrafts() {
-        const inventoryItems = Array.from(inventory.querySelectorAll('.item')).reduce((acc, itemDiv) => {
-            const itemName = itemDiv.id.replace('inventory-', '');
-            const amount = parseInt(itemDiv.querySelector('.amount').value);
-            acc[itemName] = amount;
-            return acc;
-        }, {});
-
-        crafts.innerHTML = '';
-        recipes.forEach(recipe => {
-            const canCraft = recipe.materials.every(material => inventoryItems[material] > 0);
-            if (canCraft) {
-                const craftDiv = document.createElement('div');
-                craftDiv.className = 'item';
-                craftDiv.innerHTML = `<p>${recipe.name}</p>`;
-                crafts.appendChild(craftDiv);
-            }
-        });
-    }
 });
