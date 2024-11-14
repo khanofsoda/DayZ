@@ -1,0 +1,16 @@
+{
+  "recipes": [
+    {
+      "name": "Bandage",
+      "materials": [
+        "Rags"
+      ],
+      "tools": [
+        "None"
+      ],
+      "steps": [
+        "Tear rags into strips"
+      ]
+    }
+  ]
+}

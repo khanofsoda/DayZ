@@ -1,0 +1,17 @@
+{
+  "recipes": [
+    {
+      "name": "Duct Tape",
+      "materials": [
+        "Tape",
+        "Adhesive"
+      ],
+      "tools": [
+        "None"
+      ],
+      "steps": [
+        "Combine tape and adhesive"
+      ]
+    }
+  ]
+}

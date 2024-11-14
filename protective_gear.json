@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Helmet",
+      "materials": [
+        "Metal",
+        "Padding"
+      ],
+      "tools": [
+        "Hammer"
+      ],
+      "steps": [
+        "Shape metal",
+        "Add padding"
+      ]
+    }
+  ]
+}

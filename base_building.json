@@ -1,0 +1,19 @@
+{
+  "recipes": [
+    {
+      "name": "Wooden Wall",
+      "materials": [
+        "Planks",
+        "Nails"
+      ],
+      "tools": [
+        "Hammer"
+      ],
+      "steps": [
+        "Gather materials",
+        "Construct wall frame",
+        "Attach planks"
+      ]
+    }
+  ]
+}

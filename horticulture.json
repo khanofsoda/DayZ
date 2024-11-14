@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Garden Plot",
+      "materials": [
+        "Wooden Planks",
+        "Nails"
+      ],
+      "tools": [
+        "Hammer"
+      ],
+      "steps": [
+        "Construct frame",
+        "Fill with soil"
+      ]
+    }
+  ]
+}

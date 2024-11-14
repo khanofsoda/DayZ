@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Campfire",
+      "materials": [
+        "Wood",
+        "Matches"
+      ],
+      "tools": [
+        "None"
+      ],
+      "steps": [
+        "Gather wood",
+        "Light fire with matches"
+      ]
+    }
+  ]
+}

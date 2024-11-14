@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Torch",
+      "materials": [
+        "Stick",
+        "Rag"
+      ],
+      "tools": [
+        "Lighter"
+      ],
+      "steps": [
+        "Wrap rag around stick",
+        "Light rag"
+      ]
+    }
+  ]
+}

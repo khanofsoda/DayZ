@@ -1,0 +1,17 @@
+{
+  "recipes": [
+    {
+      "name": "Storage Box",
+      "materials": [
+        "Wooden Planks",
+        "Nails"
+      ],
+      "tools": [
+        "Hammer"
+      ],
+      "steps": [
+        "Construct box"
+      ]
+    }
+  ]
+}

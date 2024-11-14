@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Walkie Talkie",
+      "materials": [
+        "Electronics",
+        "Battery"
+      ],
+      "tools": [
+        "Screwdriver"
+      ],
+      "steps": [
+        "Assemble electronics",
+        "Insert battery"
+      ]
+    }
+  ]
+}

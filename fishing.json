@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Fishing Rod",
+      "materials": [
+        "Stick",
+        "Rope"
+      ],
+      "tools": [
+        "Knife"
+      ],
+      "steps": [
+        "Cut stick to size",
+        "Attach rope"
+      ]
+    }
+  ]
+}

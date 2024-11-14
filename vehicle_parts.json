@@ -1,0 +1,16 @@
+{
+  "recipes": [
+    {
+      "name": "Car Tire",
+      "materials": [
+        "Rubber"
+      ],
+      "tools": [
+        "Mold"
+      ],
+      "steps": [
+        "Mold rubber"
+      ]
+    }
+  ]
+}

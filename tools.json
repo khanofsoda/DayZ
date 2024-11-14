@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Hammer",
+      "materials": [
+        "Metal",
+        "Wood"
+      ],
+      "tools": [
+        "Forge"
+      ],
+      "steps": [
+        "Shape metal",
+        "Attach handle"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Improvised Backpack",
+      "materials": [
+        "Burlap Sack",
+        "Rope"
+      ],
+      "tools": [
+        "Knife"
+      ],
+      "steps": [
+        "Cut burlap sack",
+        "Tie with rope"
+      ]
+    }
+  ]
+}

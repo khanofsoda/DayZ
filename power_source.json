@@ -1,0 +1,18 @@
+{
+  "recipes": [
+    {
+      "name": "Generator",
+      "materials": [
+        "Engine Parts",
+        "Battery"
+      ],
+      "tools": [
+        "Wrench"
+      ],
+      "steps": [
+        "Assemble engine parts",
+        "Connect battery"
+      ]
+    }
+  ]
+}

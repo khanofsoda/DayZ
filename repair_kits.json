@@ -1,0 +1,17 @@
+{
+  "recipes": [
+    {
+      "name": "Car Repair Kit",
+      "materials": [
+        "Wrench",
+        "Screwdriver"
+      ],
+      "tools": [
+        "None"
+      ],
+      "steps": [
+        "Gather tools"
+      ]
+    }
+  ]
+}
