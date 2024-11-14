@@ -9,30 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let items = [];
     let recipes = [];
 
-    function generateVersionSeed() {
-        return Math.random().toString(36).substring(2, 15);
-    }
-
-    const versionSeed = generateVersionSeed();
-
-    // Fetch items and recipes from JSON files with version seed to prevent caching
+    // Fetch items and recipes from JSON files
     Promise.all([
-        fetch(`base_building.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`clothing.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`communication.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`crafting.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`fishing.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`horticulture.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`light_sources.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`medical.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`personal_storage.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`power_source.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`protective_gear.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`repair_kits.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`survival.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`tools.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`vehicle_parts.json?v=${versionSeed}`).then(response => response.json()),
-        fetch(`miscellaneous.json?v=${versionSeed}`).then(response => response.json())
+        fetch('base_building.json').then(response => response.json()),
+        fetch('clothing.json').then(response => response.json()),
+        fetch('communication.json').then(response => response.json()),
+        fetch('crafting.json').then(response => response.json()),
+        fetch('fishing.json').then(response => response.json()),
+        fetch('horticulture.json').then(response => response.json()),
+        fetch('light_sources.json').then(response => response.json()),
+        fetch('medical.json').then(response => response.json()),
+        fetch('personal_storage.json').then(response => response.json()),
+        fetch('power_source.json').then(response => response.json()),
+        fetch('protective_gear.json').then(response => response.json()),
+        fetch('repair_kits.json').then(response => response.json()),
+        fetch('survival.json').then(response => response.json()),
+        fetch('tools.json').then(response => response.json()),
+        fetch('vehicle_parts.json').then(response => response.json()),
+        fetch('miscellaneous.json').then(response => response.json())
     ]).then(jsonFiles => {
         jsonFiles.forEach(file => {
             recipes = recipes.concat(file.recipes);
@@ -51,6 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.addEventListener('input', () => {
             const query = searchInput.value.toLowerCase();
             searchResults.innerHTML = '';
+            if (query.trim() === '') {
+                searchResults.style.display = 'none';
+                return;
+            }
             const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
             filteredItems.forEach(item => {
                 const itemDiv = document.createElement('div');
@@ -90,22 +88,56 @@ document.addEventListener('DOMContentLoaded', () => {
             itemDiv.className = 'item';
             itemDiv.id = `inventory-${itemName}`;
             itemDiv.innerHTML = `
+                <div class="item-header">
+                    <span class="item-name">${item.name}</span>
+                    <button class="remove-item" onclick="removeFromInventory('${item.name}')">x</button>
+                </div>
                 <img src="${item.icon}" alt="${item.name}">
-                <div>
+                <div class="item-controls">
                     <button onclick="changeQuantity('${item.name}', -1)">-</button>
+                    <input type="number" class="amount" value="1" readonly>
+                    <button onclick="changeQuantity('${item.name}', 1)">+</button>
                 </div>`;
             inventory.appendChild(itemDiv);
         }
+        updateCrafts();
     };
 
-    window.changeQuantity = function(itemName, change) {
-        const item = document.getElementById(`inventory-${itemName}`);
-        const amountInput = item.querySelector('.amount');
-        const newAmount = parseInt(amountInput.value) + change;
-        if (newAmount <= 0) {
-            item.remove();
+    window.changeQuantity = function(itemName, delta) {
+        const itemDiv = document.getElementById(`inventory-${itemName}`);
+        const amountInput = itemDiv.querySelector('.amount');
+        const newValue = parseInt(amountInput.value) + delta;
+        if (newValue <= 0) {
+            removeFromInventory(itemName);
         } else {
-            amountInput.value = newAmount;
+            amountInput.value = newValue;
         }
+        updateCrafts();
     };
+
+    window.removeFromInventory = function(itemName) {
+        const itemDiv = document.getElementById(`inventory-${itemName}`);
+        inventory.removeChild(itemDiv);
+        updateCrafts();
+    };
+
+    function updateCrafts() {
+        const inventoryItems = Array.from(inventory.querySelectorAll('.item')).reduce((acc, itemDiv) => {
+            const itemName = itemDiv.id.replace('inventory-', '');
+            const amount = parseInt(itemDiv.querySelector('.amount').value);
+            acc[itemName] = amount;
+            return acc;
+        }, {});
+
+        crafts.innerHTML = '';
+        recipes.forEach(recipe => {
+            const canCraft = recipe.materials.every(material => inventoryItems[material] > 0);
+            if (canCraft) {
+                const craftDiv = document.createElement('div');
+                craftDiv.className = 'item';
+                craftDiv.innerHTML = `<p>${recipe.name}</p>`;
+                crafts.appendChild(craftDiv);
+            }
+        });
+    }
 });
