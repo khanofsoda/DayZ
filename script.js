@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
-    const searchResults = document.getElementById('search-results');
+    const searchResults = document.createElement('div');
+    searchResults.id = 'search-results';
+    searchInput.parentNode.appendChild(searchResults);
     const inventory = document.getElementById('inventory');
     const crafts = document.getElementById('crafts');
 
@@ -46,10 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
             filteredItems.forEach(item => {
                 const itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-                itemDiv.innerHTML = `<img src="${item.icon}" alt="${item.name}"><p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
+                itemDiv.className = 'dropdown-item';
+                itemDiv.innerHTML = `<p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
                 searchResults.appendChild(itemDiv);
             });
+            searchResults.style.display = filteredItems.length ? 'block' : 'none';
         });
     }
 
