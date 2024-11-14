@@ -28,8 +28,19 @@ body {
 .dropdown-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 5px;
     cursor: pointer;
+}
+
+.dropdown-item p {
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.dropdown-item button {
+    margin-left: auto;
 }
 
 .dropdown-item:hover {
