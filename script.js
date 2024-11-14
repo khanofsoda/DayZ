@@ -12,31 +12,47 @@ document.addEventListener('DOMContentLoaded', () => {
     Promise.all([
         fetch('base_building.json').then(response => response.json()),
         fetch('clothing.json').then(response => response.json()),
-        // ... other JSON files
+        fetch('communication.json').then(response => response.json()),
+        fetch('crafting.json').then(response => response.json()),
+        fetch('fishing.json').then(response => response.json()),
+        fetch('horticulture.json').then(response => response.json()),
+        fetch('light_sources.json').then(response => response.json()),
+        fetch('medical.json').then(response => response.json()),
+        fetch('personal_storage.json').then(response => response.json()),
+        fetch('power_source.json').then(response => response.json()),
+        fetch('protective_gear.json').then(response => response.json()),
+        fetch('repair_kits.json').then(response => response.json()),
+        fetch('survival.json').then(response => response.json()),
+        fetch('tools.json').then(response => response.json()),
+        fetch('vehicle_parts.json').then(response => response.json()),
+        fetch('miscellaneous.json').then(response => response.json())
     ]).then(jsonFiles => {
         jsonFiles.forEach(file => {
             recipes = recipes.concat(file.recipes);
             file.recipes.forEach(recipe => {
-                Object.keys(recipe.materials).forEach(material => {
+                recipe.materials.forEach(material => {
                     if (!items.some(item => item.name === material)) {
                         items.push({ name: material, icon: `${material.toLowerCase().replace(/ /g, '_')}.png` });
                     }
                 });
             });
         });
+        initSearch();
     });
 
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        searchResults.innerHTML = '';
-        const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
-        filteredItems.forEach(item => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'item';
-            itemDiv.innerHTML = `<img src="${item.icon}" alt="${item.name}"><p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
-            searchResults.appendChild(itemDiv);
+    function initSearch() {
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            searchResults.innerHTML = '';
+            const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
+            filteredItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.innerHTML = `<img src="${item.icon}" alt="${item.name}"><p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
+                searchResults.appendChild(itemDiv);
+            });
         });
-    });
+    }
 
     window.addToInventory = function(itemName) {
         const item = items.find(i => i.name === itemName);
@@ -87,11 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         crafts.innerHTML = '';
         recipes.forEach(recipe => {
-            const canCraft = Object.keys(recipe.requires).every(reqItem => inventoryItems[reqItem] >= recipe.requires[reqItem]);
+            const canCraft = recipe.materials.every(material => inventoryItems[material] > 0);
             if (canCraft) {
                 const craftDiv = document.createElement('div');
                 craftDiv.className = 'item';
-                craftDiv.innerHTML = `<p>${recipe.result}</p>`;
+                craftDiv.innerHTML = `<p>${recipe.name}</p>`;
                 crafts.appendChild(craftDiv);
             }
         });
