@@ -20,7 +20,7 @@ body {
     border: 1px solid #ddd;
     max-height: 150px;
     overflow-y: auto;
-    width: 100%;
+    width: 100%; /* Ensure search results match search field width */
     z-index: 1000;
     display: none;
 }
@@ -36,11 +36,11 @@ body {
 }
 
 .dropdown-item:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Light background for even items */
 }
 
 .dropdown-item:nth-child(odd) {
-    background-color: #d9d9d9;
+    background-color: #e9e9e9; /* Slightly darker background for odd items */
 }
 
 .item-name {
