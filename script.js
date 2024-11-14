@@ -31,26 +31,29 @@ document.addEventListener('DOMContentLoaded', () => {
             // Assuming each file contains an array of recipes
             recipes = recipes.concat(file.recipes);
             file.recipes.forEach(recipe => {
-                Object.keys(recipe.materials).forEach(material => {
+                Object.keys(recipe.requires).forEach(material => {
                     if (!items.some(item => item.name === material)) {
                         items.push({ name: material, icon: `${material.toLowerCase().replace(/ /g, '_')}.png` });
                     }
                 });
             });
         });
+        initSearch();
     });
 
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        searchResults.innerHTML = '';
-        const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
-        filteredItems.forEach(item => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'item';
-            itemDiv.innerHTML = `<img src="${item.icon}" alt="${item.name}"><p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
-            searchResults.appendChild(itemDiv);
+    function initSearch() {
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            searchResults.innerHTML = '';
+            const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
+            filteredItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.innerHTML = `<img src="${item.icon}" alt="${item.name}"><p>${item.name}</p><button onclick="addToInventory('${item.name}')">+</button>`;
+                searchResults.appendChild(itemDiv);
+            });
         });
-    });
+    }
 
     window.addToInventory = function(itemName) {
         const item = items.find(i => i.name === itemName);
