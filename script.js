@@ -5,9 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.parentNode.appendChild(searchResults);
     const inventory = document.getElementById('inventory');
     const crafts = document.getElementById('crafts');
+    const itemOverlay = document.getElementById('item-overlay');
+    const overlayItemName = document.getElementById('overlay-item-name');
+    const overlayItemImage = document.getElementById('overlay-item-image');
+    const overlayItemAmount = document.getElementById('overlay-item-amount');
 
     let items = [];
     let recipes = [];
+    let currentOverlayItem = null;
 
     // Fetch items and recipes from JSON files
     Promise.all([
@@ -85,12 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
             amountInput.value = parseInt(amountInput.value) + 1;
         } else {
             const itemDiv = document.createElement('div');
-            itemDiv.className = 'item';
+            itemDiv.className = `item grid-item ${itemName.toLowerCase().replace(/ /g, '-')}`;
             itemDiv.id = `inventory-${itemName}`;
             itemDiv.innerHTML = `
                 <div class="item-header">
                     <span class="item-name">${item.name}</span>
-                    <button class="remove-item" onclick="removeFromInventory('${item.name}')">x</button>
+                    <button class="remove-item" onclick="showOverlay('${item.name}')">x</button>
                 </div>
                 <img src="${item.icon}" alt="${item.name}">
                 <div class="item-controls">
@@ -114,6 +119,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         updateCrafts();
     };
+
+    window.showOverlay = function(itemName) {
+        const item = items.find(i => i.name === itemName);
+        currentOverlayItem = item;
+        overlayItemName.textContent = item.name;
+        overlayItemImage.src = item.icon;
+        const existingItem = document.getElementById(`inventory-${itemName}`);
+        const amountInput = existingItem.querySelector('.amount');
+        overlayItemAmount.value = amountInput.value;
+        itemOverlay.classList.add('active');
+    };
+
+    window.closeOverlay = function() {
+        itemOverlay.classList.remove('active');
+        currentOverlayItem = null;
+    };
+
+    window.changeQuantityOverlay = function(delta) {
+        const newValue = parseInt(overlayItemAmount.value) + delta;
+        if (newValue <= 0) {
+            removeFromInventoryOverlay();
+        } else {
+            overlayItemAmount.value = newValue;
+            updateInventoryQuantity(currentOverlayItem.name, newValue);
+        }
+    };
+
+    window.removeFromInventoryOverlay = function() {
+        removeFromInventory(currentOverlayItem.name);
+        closeOverlay();
+    };
+
+    function updateInventoryQuantity(itemName, newValue) {
+        const itemDiv = document.getElementById(`inventory-${itemName}`);
+        const amountInput = itemDiv.querySelector('.amount');
+        amountInput.value = newValue;
+        updateCrafts();
+    }
 
     window.removeFromInventory = function(itemName) {
         const itemDiv = document.getElementById(`inventory-${itemName}`);
