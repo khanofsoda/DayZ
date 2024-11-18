@@ -1,11 +1,17 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background: url('path_to_dayz_background_image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff; /* Change text color to white to contrast with dark background */
 }
 
 .container {
     width: 80%;
     margin: auto;
     text-align: center;
+    background: rgba(0, 0, 0, 0.7); /* Slightly transparent black background for readability */
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .search-container {
@@ -15,20 +21,24 @@ body {
 }
 
 #search {
-    width: 100%; /* Make the search input field take the full width of the container */
+    width: 100%; 
     padding: 10px;
     box-sizing: border-box;
+    border: 1px solid #555;
+    background: #333;
+    color: #fff;
 }
 
 #search-results {
     position: absolute;
-    background: white;
-    border: 1px solid #ddd;
+    background: #444;
+    border: 1px solid #555;
     max-height: 150px;
     overflow-y: auto;
-    width: 100%; /* Ensure search results match search field width */
+    width: 100%; 
     z-index: 1000;
     display: none;
+    color: #fff;
 }
 
 .dropdown-item {
@@ -37,16 +47,17 @@ body {
     align-items: center;
     padding: 5px;
     cursor: pointer;
-    border: 1px solid black;
+    border: 1px solid #555;
     margin: 2px 0;
+    background: #333;
 }
 
 .dropdown-item:nth-child(even) {
-    background-color: #f9f9f9; /* Light background for even items */
+    background-color: #555;
 }
 
 .dropdown-item:nth-child(odd) {
-    background-color: #e9e9e9; /* Slightly darker background for odd items */
+    background-color: #444;
 }
 
 #inventory, #crafts {
@@ -57,10 +68,12 @@ body {
 }
 
 .item {
-    border: 1px solid #ddd;
+    border: 1px solid #555;
     padding: 10px;
     margin: 10px;
     text-align: center;
+    background: #333;
+    color: #fff;
 }
 
 /* Add styles for the inventory item display */
@@ -92,11 +105,18 @@ body {
 
 .item-controls button {
     padding: 5px;
+    background: #444;
+    border: 1px solid #555;
+    color: #fff;
+    cursor: pointer;
 }
 
 .item-controls .amount {
-    width: .5em;
+    width: 2em;
     text-align: center;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
 }
 
 #inventory {
