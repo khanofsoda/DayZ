@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background: url('path_to_dayz_background_image.jpg') no-repeat center center fixed;
+    background: url('bg.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #fff; /* Change text color to white to contrast with dark background */
 }
