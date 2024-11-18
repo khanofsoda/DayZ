@@ -18,6 +18,19 @@
         <h2>Crafts</h2>
         <div id="crafts"></div>
     </div>
+    <div id="item-overlay" class="item-overlay">
+        <div class="item-header">
+            <span id="overlay-item-name"></span>
+            <button onclick="closeOverlay()">x</button>
+        </div>
+        <img id="overlay-item-image" src="" alt="">
+        <div class="item-controls">
+            <button onclick="changeQuantityOverlay(-1)">-</button>
+            <input type="number" id="overlay-item-amount" class="amount" value="1" readonly>
+            <button onclick="changeQuantityOverlay(1)">+</button>
+        </div>
+        <button class="remove-item" onclick="removeFromInventoryOverlay()">Remove</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
