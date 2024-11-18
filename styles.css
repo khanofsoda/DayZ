@@ -1,19 +1,22 @@
+/* Define the main body styling */
 body {
     font-family: 'Arial', sans-serif;
     background: url('bg.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #fff; /* Change text color to white to contrast with dark background */
+    color: #fff;
 }
 
+/* Container styling */
 .container {
     width: 80%;
     margin: auto;
     text-align: center;
-    background: rgba(0, 0, 0, 0.7); /* Slightly transparent black background for readability */
+    background: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
 }
 
+/* Search bar styling */
 .search-container {
     position: relative;
     display: inline-block;
@@ -21,7 +24,7 @@ body {
 }
 
 #search {
-    width: 100%; 
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid #555;
@@ -29,13 +32,14 @@ body {
     color: #fff;
 }
 
+/* Search results styling */
 #search-results {
     position: absolute;
     background: #444;
     border: 1px solid #555;
     max-height: 150px;
     overflow-y: auto;
-    width: 100%; 
+    width: 100%;
     z-index: 1000;
     display: none;
     color: #fff;
@@ -60,35 +64,45 @@ body {
     background-color: #444;
 }
 
+/* Grid-based inventory and crafts styling */
 #inventory, #crafts {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 5px;
     margin-top: 20px;
 }
 
 .item {
     border: 1px solid #555;
     padding: 10px;
-    margin: 10px;
+    margin: 5px;
     text-align: center;
     background: #333;
     color: #fff;
+    position: relative;
 }
 
-/* Add styles for the inventory item display */
+/* Overlay styling for item details */
+.item-overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 2000;
+}
+
+.item-overlay.active {
+    display: block;
+}
+
 .item-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.remove-item {
-    background: none;
-    border: none;
-    color: red;
-    cursor: pointer;
-    font-size: 1.2em;
 }
 
 .item img {
@@ -119,8 +133,25 @@ body {
     color: #fff;
 }
 
-#inventory {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
+.remove-item {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.grid-item {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.grid-item.planks {
+    grid-column: span 8;
+    grid-row: span 2;
+}
+
+.grid-item.nails {
+    grid-column: span 1;
+    grid-row: span 1;
 }
