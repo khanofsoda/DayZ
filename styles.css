@@ -43,25 +43,53 @@ body {
     z-index: 1000;
     display: none;
     color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
+/* Dropdown items */
 .dropdown-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
-    border: 1px solid #555;
-    margin: 2px 0;
+    border-bottom: 1px solid #555;
     background: #333;
+    transition: background 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+    background: #555;
 }
 
 .dropdown-item:nth-child(even) {
-    background-color: #555;
+    background-color: #444;
 }
 
 .dropdown-item:nth-child(odd) {
-    background-color: #444;
+    background-color: #333;
+}
+
+/* Name inside search dropdown */
+.item-name {
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+/* Button inside search dropdown */
+.item-button button {
+    border: none;
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.item-button button:hover {
+    background: #218838;
 }
 
 /* Grid-based inventory and crafts styling */
@@ -142,16 +170,6 @@ body {
 }
 
 .grid-item {
-    grid-column: span 1;
-    grid-row: span 1;
-}
-
-.grid-item.planks {
-    grid-column: span 8;
-    grid-row: span 2;
-}
-
-.grid-item.nails {
     grid-column: span 1;
     grid-row: span 1;
 }
